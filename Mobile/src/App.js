@@ -8,7 +8,7 @@ export default function App() {
   return (
     <>
       <StatusBar backgroundColor="#383FDB" />
-      <Welcome />
+      <Login />
     </>
   );
 }
