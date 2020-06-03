@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-import Login from './screens/Login';
+import Welcome from './screens/Welcome';
 import Register from './screens/Register';
 
 export default function App() {
-  return <Login />;
+  return <Welcome />;
 }
