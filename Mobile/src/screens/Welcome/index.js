@@ -4,15 +4,14 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 import styles from './styles';
 
+import Header from '../../components/Header';
 export default function Welcome() {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Welcome </Text>
-        <Text style={styles.headerText}>
-          Please Login or sign up to continue using our app
-        </Text>
-      </View>
+      <Header
+        title="Welcome"
+        text="Please Login or sign up to continue using our app"
+      />
       <View style={styles.bodyContainer}>
         <Image style={styles.image} source={require('../../../img/Logo.jpg')} />
 
