@@ -9,7 +9,7 @@ export default function App() {
   return (
     <>
       <StatusBar backgroundColor="#383FDB" />
-      <Login />
+      <Register />
     </>
   );
 }
