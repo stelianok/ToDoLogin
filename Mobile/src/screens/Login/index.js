@@ -11,7 +11,7 @@ import {
 import styles from './styles';
 import Header from '../../components/Header';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Feather';
 export default function Login() {
   const windowsWidth = useWindowDimensions().width;
   const [showPass, setShowPass] = useState(true);
@@ -31,7 +31,7 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Header
-        title="Sign Up"
+        title="Sign In"
         text="Please Registration with email and
               sign up to continue using our app"
       />
@@ -41,7 +41,7 @@ export default function Login() {
         </Text>
         <View>
           <Icon
-            name={'ios-person'}
+            name={'user'}
             size={28}
             color={'blue'}
             style={styles.inputIcon}
@@ -55,7 +55,7 @@ export default function Login() {
         </View>
         <View>
           <Icon
-            name={'ios-lock'}
+            name={'lock'}
             size={28}
             color={'blue'}
             style={styles.inputIcon}
@@ -73,7 +73,7 @@ export default function Login() {
               ShowPassword(press);
             }}>
             <Icon
-              name={press === false ? 'ios-eye-off' : 'ios-eye'}
+              name={press === false ? 'eye-off' : 'eye'}
               size={26}
               color={'blue'}
             />
@@ -86,8 +86,13 @@ export default function Login() {
         <Text style={[styles.bodyText, {color: '#383FDB'}]}>
           Or Login With Facebook
         </Text>
-        <TouchableOpacity style={styles.facebookButton}>
-          <Text style={{color: '#FFF', fontSize: 25}}> Facebook </Text>
+        <TouchableOpacity
+          style={[styles.facebookButton, {width: windowsWidth - 55}]}>
+          <Icon name={'facebook'} size={24} color="#fff" />
+          <Text style={{color: '#FFF', fontSize: 25, fontFamily: 'Arial'}}>
+            {' '}
+            Facebook{' '}
+          </Text>
         </TouchableOpacity>
 
         <View style={styles.bottomContainer}>

@@ -17,13 +17,17 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   facebookButton: {
-    backgroundColor: '#383FDB',
+    backgroundColor: '#4169e1',
 
+    height: 60,
     borderRadius: 15,
-    paddingHorizontal: 55,
-    paddingVertical: 15,
 
-    marginBottom: 20,
+    marginBottom: 25,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    flexDirection: 'row',
   },
   loginButton: {
     backgroundColor: '#383FDB',
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 50,
-    borderRadius: 45,
+    borderRadius: 15,
     fontSize: 16,
     paddingLeft: 45,
     backgroundColor: 'transparent',
