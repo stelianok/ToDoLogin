@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
   View,
@@ -16,11 +17,12 @@ export default function Login() {
   const [showPass, setShowPass] = useState(true);
   const [press, setPress] = useState(false);
 
+  // eslint-disable-next-line no-shadow
   function ShowPassword(press) {
     if (press) {
       setPress(false);
       setShowPass(true);
-    } else if (press == false) {
+    } else if (press === false) {
       setPress(true);
       setShowPass(false);
     }
@@ -35,13 +37,7 @@ export default function Login() {
       />
       <View style={styles.bodyContainer}>
         <Text style={[styles.bodyText, {color: '#383FDB'}]}>
-          Login With Facebook
-        </Text>
-        <TouchableOpacity style={styles.facebookButton}>
-          <Text style={{color: '#FFF', fontSize: 25}}> Facebook </Text>
-        </TouchableOpacity>
-        <Text style={[styles.bodyText, {color: '#383FDB', marginTop: 30}]}>
-          Or Login with email
+          Login with email
         </Text>
         <View>
           <Icon
@@ -86,6 +82,12 @@ export default function Login() {
         <TouchableOpacity
           style={[styles.loginButton, {width: windowsWidth - 55}]}>
           <Text style={styles.loginButtonText}>Login</Text>
+        </TouchableOpacity>
+        <Text style={[styles.bodyText, {color: '#383FDB'}]}>
+          Or Login With Facebook
+        </Text>
+        <TouchableOpacity style={styles.facebookButton}>
+          <Text style={{color: '#FFF', fontSize: 25}}> Facebook </Text>
         </TouchableOpacity>
 
         <View style={styles.bottomContainer}>
