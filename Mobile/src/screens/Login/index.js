@@ -12,7 +12,7 @@ import styles from './styles';
 import Header from '../../components/Header';
 
 import Icon from 'react-native-vector-icons/Feather';
-export default function Login() {
+export default function Login({navigation}) {
   const windowsWidth = useWindowDimensions().width;
   const [showPass, setShowPass] = useState(true);
   const [press, setPress] = useState(false);
@@ -77,24 +77,32 @@ export default function Login() {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          style={[styles.loginButton, {width: windowsWidth - 55}]}>
+          style={[styles.loginButton, {width: windowsWidth - 55}]}
+          onPress={() => {
+            navigation.navigate('Home');
+          }}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
         <Text style={[styles.bodyText, {color: '#383FDB'}]}>
           Or Login With Facebook
         </Text>
         <TouchableOpacity
-          style={[styles.facebookButton, {width: windowsWidth - 55}]}>
+          style={[styles.facebookButton, {width: windowsWidth - 55}]}
+          onPress={() => {
+            navigation.navigate('Home');
+          }}>
           <Icon name={'facebook'} size={24} color="#fff" />
           <Text style={{color: '#FFF', fontSize: 25, fontFamily: 'Arial'}}>
-            {' '}
-            Facebook{' '}
+            Facebook
           </Text>
         </TouchableOpacity>
 
         <View style={styles.bottomContainer}>
           <Text style={styles.bottomText}>Don't have an account yet?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Register');
+            }}>
             <Text style={styles.registerButtonText}>Sign Up</Text>
           </TouchableOpacity>
         </View>

@@ -20,7 +20,6 @@ export default function Register({navigation}) {
   // eslint-disable-next-line prettier/prettier
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(true);
 
-
   function SetPasswordVisibility() {
     if (isPasswordVisible) {
       setIsPasswordVisible(false);
@@ -152,7 +151,9 @@ export default function Register({navigation}) {
             }}>
             <Text style={styles.signupButtonText}> Sign Up! </Text>
           </TouchableOpacity>
-          <Text style={styles.bodyText}> Or login with facebook </Text>
+          <Text style={[styles.bodyText, {marginTop: 5}]}>
+            Or login with facebook
+          </Text>
           <TouchableOpacity
             style={[styles.facebookButton, {width: windowsWidth - 55}]}
             onPress={() => {
