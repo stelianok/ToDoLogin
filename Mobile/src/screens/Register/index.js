@@ -14,7 +14,7 @@ import styles from './styles';
 import Header from '../../components/Header';
 
 import Icon from 'react-native-vector-icons/Feather';
-export default function Register() {
+export default function Register({navigation}) {
   const windowsWidth = useWindowDimensions().width;
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   // eslint-disable-next-line prettier/prettier
@@ -146,19 +146,29 @@ export default function Register() {
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={[styles.signupButton, {width: windowsWidth - 55}]}>
+            style={[styles.signupButton, {width: windowsWidth - 55}]}
+            onPress={() => {
+              navigation.navigate('Login');
+            }}>
             <Text style={styles.signupButtonText}> Sign Up! </Text>
           </TouchableOpacity>
           <Text style={styles.bodyText}> Or login with facebook </Text>
           <TouchableOpacity
-            style={[styles.facebookButton, {width: windowsWidth - 55}]}>
+            style={[styles.facebookButton, {width: windowsWidth - 55}]}
+            onPress={() => {
+              navigation.navigate('Home');
+            }}>
             <Icon name={'facebook'} color={'#FFF'} size={28} />
             <Text style={styles.facebookButtonText}> Facebook </Text>
           </TouchableOpacity>
 
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.loginText}>You already have an account? </Text>
-            <TouchableOpacity style={styles.loginButton}>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
               <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
           </View>
