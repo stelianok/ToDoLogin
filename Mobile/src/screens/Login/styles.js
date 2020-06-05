@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 50,
-    borderRadius: 15,
+    borderRadius: 5,
     fontSize: 16,
     paddingLeft: 45,
     backgroundColor: 'transparent',

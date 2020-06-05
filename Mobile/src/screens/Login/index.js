@@ -30,18 +30,14 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Header
-        title="Sign In"
-        text="Please Registration with email and
-              sign up to continue using our app"
-      />
+      <Header title="Sign In" text="Please Login to continue using our app" />
       <View style={styles.bodyContainer}>
         <Text style={[styles.bodyText, {color: '#383FDB'}]}>
           Login with email
         </Text>
         <View>
           <Icon
-            name={'user'}
+            name={'mail'}
             size={28}
             color={'blue'}
             style={styles.inputIcon}
@@ -49,8 +45,9 @@ export default function Login() {
           />
           <TextInput
             style={[styles.textInput, {width: windowsWidth - 55}]}
-            placeholder={'Username'}
+            placeholder={'Email'}
             placecholderTextColor={'gray'}
+            keyboardType={'email-address'}
           />
         </View>
         <View>
