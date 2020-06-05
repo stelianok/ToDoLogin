@@ -26,20 +26,35 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   facebookButton: {
-    backgroundColor: '#383FDB',
+    backgroundColor: '#4169e1',
 
+    height: 60,
     borderRadius: 15,
-    paddingHorizontal: 55,
-    paddingVertical: 15,
+
+    marginBottom: 25,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    flexDirection: 'row',
+  },
+  facebookButtonText: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: '#FFF',
   },
   signupButton: {
     backgroundColor: '#383FDB',
 
+    height: 60,
     borderRadius: 15,
     paddingHorizontal: 70,
     paddingVertical: 15,
 
     marginBottom: 25,
+
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   signupButtonText: {
     color: '#FFF',
