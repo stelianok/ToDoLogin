@@ -14,7 +14,7 @@ import Header from '../../components/Header';
 
 import Icon from 'react-native-vector-icons/Feather';
 
-export default function Welcome({navigator}) {
+export default function Welcome({navigation}) {
   const windowWidth = useWindowDimensions().width;
   return (
     <View style={styles.container}>
@@ -29,7 +29,10 @@ export default function Welcome({navigator}) {
           Register With Facebook
         </Text>
         <TouchableOpacity
-          style={[styles.facebookButton, {width: windowWidth - 55}]}>
+          style={[styles.facebookButton, {width: windowWidth - 55}]}
+          onPress={() => {
+            navigation.navigate('Home');
+          }}>
           <Icon name={'facebook'} color={'white'} size={28} />
           <Text style={{color: '#FFF', fontSize: 25}}> Facebook </Text>
         </TouchableOpacity>
@@ -37,7 +40,10 @@ export default function Welcome({navigator}) {
           Or Register with email
         </Text>
         <TouchableOpacity
-          style={[styles.signupButton, {width: windowWidth - 55}]}>
+          style={[styles.signupButton, {width: windowWidth - 55}]}
+          onPress={() => {
+            navigation.navigate('Register');
+          }}>
           <Text style={styles.signupButtonText}>SignUp</Text>
         </TouchableOpacity>
 
@@ -45,7 +51,10 @@ export default function Welcome({navigator}) {
           <Text style={[styles.headerText, {fontSize: 18}]}>
             You already have an account?
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Login');
+            }}>
             <Text style={styles.registerButtonText}>Login</Text>
           </TouchableOpacity>
         </View>
