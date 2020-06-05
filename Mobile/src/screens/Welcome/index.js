@@ -25,7 +25,7 @@ export default function Welcome({navigator}) {
       <View style={styles.bodyContainer}>
         <Image style={styles.image} source={require('../../../img/Logo.jpg')} />
 
-        <Text style={[styles.bodyText, {color: '#383FDB', marginTop: -70}]}>
+        <Text style={[styles.bodyText, {marginTop: -70}]}>
           Register With Facebook
         </Text>
         <TouchableOpacity
@@ -33,7 +33,7 @@ export default function Welcome({navigator}) {
           <Icon name={'facebook'} color={'white'} size={28} />
           <Text style={{color: '#FFF', fontSize: 25}}> Facebook </Text>
         </TouchableOpacity>
-        <Text style={[styles.bodyText, {color: '#383FDB', marginTop: 30}]}>
+        <Text style={[styles.bodyText, {marginTop: 5}]}>
           Or Register with email
         </Text>
         <TouchableOpacity
