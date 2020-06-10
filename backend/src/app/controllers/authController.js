@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
-
+const mailer = require('../../modules/mailer');
 const db = require('../../database');
 
 const jwt = require('jsonwebtoken');
@@ -66,5 +66,72 @@ router.post('/authenticate', async(req,res) => {
   });
 })
 
+router.post('/forgot_password', async(req,res) => {
+  const {email} = req.body;
+
+  try{
+    const user = await db.get('SELECT * FROM users WHERE email = ?',[email], async function(err,row){
+      if(err){
+        res.send(err.message);
+      }
+      if(row === undefined){
+        res.status(400).send({error: 'User not found'});
+      }
+      const token = crypto.randomBytes(20).toString('hex');
+
+      const now = new Date();
+      now.setHours(now.getHours() + 1);
+      await db.get('UPDATE users SET passwordResetToken = ?, passwordResetExpires = ? where id= ?', [token,now,row.id]);
+
+      console.log(token,now);
+      mailer.sendMail({
+        to: row.email,
+        from: 'company@gmail.com',
+        template: 'auth/forgot_password',
+        context: {token}
+      }, (err) => {
+        if(err){
+          console.log(err);
+          return res.status(400).send({error: 'Cannot send forgot password email'});
+        }
+
+        return res.send();
+      })
+    });
+  }
+  catch (err){
+    console.log(err)
+    res.status(400).send({error: 'Error on forgot password, try again'})
+  }
+});
+
+router.post('/reset_password', async(req, res) => {
+  const {email,token,password} = req.body;
+  try{
+    const user = await db.get('SELECT * FROM users WHERE email = ?', [email], async function(err,row){
+      if(err){
+        res.send(err.message);
+      }
+      if(row === undefined){
+        res.status(400).send({error: 'User not found'});
+      }
+      if(token !== row.passwordResetToken){
+        return res.status(400).send({error: 'Token invalid'});
+      }
+
+      const now = new Date();
+      if(now > row.passwordResetExpires){
+        return res.status(400).send({error: 'Token expired, generate a new one'});
+      }
+      const passwordEncrypted = await encryptPassword(password);
+      db.run('UPDATE users SET password = ? WHERE email = ?', [passwordEncrypted,email]);
+
+      res.send();
+    });
+  }
+  catch(err){
+    res.status(400).send({error: "Cannot reset password, try again"});
+  }
+})
 
 module.exports = app => app.use('/auth', router);
