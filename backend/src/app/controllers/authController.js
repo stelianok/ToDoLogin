@@ -44,5 +44,27 @@ router.post('/register', async(req,res) => {
   }
 });
 
+router.post('/authenticate', async(req,res) => {
+  const {email,password} = req.body;
+  
+  const user = db.get('SELECT * FROM users WHERE email=?',[email], async function(err,row){
+    if(err){
+      res.send(err.message);
+    }
+    else if(row === undefined){
+      res.status(400).send({error: 'User not found'});
+    }
+    else if(!await bcrypt.compare(password, row.password)){
+      return res.status(400).send({error: 'Invalid Password'});
+    }
+    else{
+      row.password = undefined;
+      return res.send({row,token: generateToken({id: row.id})})
+    }
+    
+
+  });
+})
+
 
 module.exports = app => app.use('/auth', router);
