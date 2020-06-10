@@ -1,10 +1,11 @@
-const express = require('express');
+const express =  require('express');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 
-app.get('/',(require,response) => {
-  console.log('Hello boi');
-  response.send('hello');
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
+require('./app/controllers/index')(app);
 app.listen(3333);
