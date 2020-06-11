@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from './screens/Login';
 import Welcome from './screens/Welcome';
 import Register from './screens/Register';
+import ForgotPassword from './screens/ForgotPassword';
 import Home from './screens/Home';
 const Stack = createStackNavigator();
 export default function Routes() {
@@ -17,6 +18,7 @@ export default function Routes() {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>

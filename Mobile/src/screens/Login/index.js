@@ -76,6 +76,17 @@ export default function Login({navigation}) {
             />
           </TouchableOpacity>
         </View>
+        <View>
+          <TouchableOpacity
+            style={styles.forgotPasswordButton}
+            onPress={() => {
+              navigation.navigate('ForgotPassword');
+            }}>
+            <Text style={styles.forgotPasswordButtonText}>
+              Forgot your password?
+            </Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={[styles.loginButton, {width: windowsWidth - 55}]}
           onPress={() => {

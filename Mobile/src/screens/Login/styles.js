@@ -87,5 +87,17 @@ const styles = StyleSheet.create({
     top: 10,
     right: 37,
   },
+  forgotPasswordButton: {
+    marginTop: -25,
+  },
+  forgotPasswordButtonText: {
+    fontSize: 18,
+    color: '#383FDB',
+    fontWeight: 'bold',
+
+    paddingLeft: 5,
+
+    textDecorationLine: 'underline',
+  },
 });
 export default styles;
