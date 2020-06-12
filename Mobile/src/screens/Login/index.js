@@ -21,6 +21,23 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  function Login(email, password) {
+    const data = {
+      email,
+      password,
+    };
+    api
+      .post('/auth/authenticate', data)
+      .then(function (res) {
+        console.log(res.data.token);
+        navigation.navigate('Home');
+        return true;
+      })
+      .catch(function (err) {
+        console.log(err.response.data.error);
+        return false;
+      });
+  }
   // eslint-disable-next-line no-shadow
   function ShowPassword(press) {
     if (press) {
@@ -98,7 +115,8 @@ export default function Login({navigation}) {
         <TouchableOpacity
           style={[styles.loginButton, {width: windowsWidth - 55}]}
           onPress={() => {
-            navigation.navigate('Home');
+            //navigation.navigate('Home');
+            Login(email, password);
           }}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>

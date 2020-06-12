@@ -46,7 +46,7 @@ router.post('/register', async(req,res) => {
 
 router.post('/authenticate', async(req,res) => {
   const {email,password} = req.body;
-  
+  console.log(email,password);
   const user = db.get('SELECT * FROM users WHERE email=?',[email], async function(err,row){
     if(err){
       res.send(err.message);
@@ -75,7 +75,7 @@ router.post('/forgot_password', async(req,res) => {
         res.send(err.message);
       }
       if(row === undefined){
-        res.status(400).send({error: 'User not found'});
+        res.status(400).sendStatus({error: 'User not found'});
       }
       const token = crypto.randomBytes(20).toString('hex');
 
@@ -92,7 +92,7 @@ router.post('/forgot_password', async(req,res) => {
       }, (err) => {
         if(err){
           console.log(err);
-          return res.status(400).send({error: 'Cannot send forgot password email'});
+          return res.status(400).sendStatus({error: 'Cannot send forgot password email'});
         }
 
         return res.send();
@@ -101,7 +101,7 @@ router.post('/forgot_password', async(req,res) => {
   }
   catch (err){
     console.log(err)
-    res.status(400).send({error: 'Error on forgot password, try again'})
+    res.status(400).sendStatus({error: 'Error on forgot password, try again'})
   }
 });
 
@@ -113,15 +113,15 @@ router.post('/reset_password', async(req, res) => {
         res.send(err.message);
       }
       if(row === undefined){
-        res.status(400).send({error: 'User not found'});
+        res.status(400).sendStatus({error: 'User not found'});
       }
       if(token !== row.passwordResetToken){
-        return res.status(400).send({error: 'Token invalid'});
+        return res.status(400).sendStatus({error: 'Token invalid'});
       }
 
       const now = new Date();
       if(now > row.passwordResetExpires){
-        return res.status(400).send({error: 'Token expired, generate a new one'});
+        return res.status(400).sendStatus({error: 'Token expired, generate a new one'});
       }
       const passwordEncrypted = await encryptPassword(password);
       db.run('UPDATE users SET password = ? WHERE email = ?', [passwordEncrypted,email]);
@@ -130,7 +130,7 @@ router.post('/reset_password', async(req, res) => {
     });
   }
   catch(err){
-    res.status(400).send({error: "Cannot reset password, try again"});
+    res.status(400).sendStatus({error: "Cannot reset password, try again"});
   }
 })
 
