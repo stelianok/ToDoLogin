@@ -1,5 +1,3 @@
-# React Native Auhentication app.
-
 <h1 align="center"> React Native App with JWT Authentication </h1>
 
 ## :rocket:  Technologies
