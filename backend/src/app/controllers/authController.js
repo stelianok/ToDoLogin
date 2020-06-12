@@ -35,7 +35,7 @@ router.post('/register', async(req,res) => {
         else{
           console.log('everything ok');
 
-          return res.send({user, token: generateToken({id: user.id})});
+          return res.send({token: generateToken({id: user.id})});
         }
       });
     }

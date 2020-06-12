@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
@@ -8,6 +9,8 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
+
+import api from '../../services/api';
 
 import styles from './styles';
 
@@ -20,6 +23,12 @@ export default function Register({navigation}) {
   // eslint-disable-next-line prettier/prettier
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(true);
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [token, setToken] = useState('');
   function SetPasswordVisibility() {
     if (isPasswordVisible) {
       setIsPasswordVisible(false);
@@ -32,6 +41,37 @@ export default function Register({navigation}) {
       setIsConfirmPasswordVisible(false);
     } else if (!isConfirmPasswordVisible) {
       setIsConfirmPasswordVisible(true);
+    }
+  }
+  function RegisterUser(firstName, lastName, email, password, confirmPassword) {
+    if (VerifyPassword(password, confirmPassword)) {
+      const data = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password,
+      };
+
+      api
+        .post('/auth/register', data)
+        .then(function (res) {
+          console.log(res.data.token);
+          setToken(res.data.token);
+          return true;
+        })
+        .catch(function (error) {
+          console.log(error);
+          return false;
+        });
+    } else if (!VerifyPassword(password, confirmPassword)) {
+      console.log(`${password} is different than ${confirmPassword}`);
+    }
+  }
+  function VerifyPassword(password, confirmPassword) {
+    if (password === confirmPassword) {
+      return true;
+    } else if (password !== confirmPassword) {
+      return false;
     }
   }
   return (
@@ -55,6 +95,8 @@ export default function Register({navigation}) {
               style={[styles.textInput, {width: windowsWidth - 55}]}
               placeholder="first name"
               placeholderTextColor={'gray'}
+              value={firstName}
+              onChangeText={setFirstName}
             />
           </View>
           <View>
@@ -70,6 +112,8 @@ export default function Register({navigation}) {
               style={[styles.textInput, {width: windowsWidth - 55}]}
               placeholder="last name"
               placeholderTextColor={'gray'}
+              value={lastName}
+              onChangeText={setLastName}
             />
           </View>
           <View>
@@ -86,6 +130,8 @@ export default function Register({navigation}) {
               placeholder="email"
               placeholderTextColor={'gray'}
               keyboardType={'email-address'}
+              value={email}
+              onChangeText={setEmail}
             />
           </View>
           <View>
@@ -102,6 +148,8 @@ export default function Register({navigation}) {
               placeholder="password"
               secureTextEntry={isPasswordVisible}
               placeholderTextColor={'gray'}
+              value={password}
+              onChangeText={setPassword}
             />
 
             <TouchableOpacity
@@ -130,6 +178,8 @@ export default function Register({navigation}) {
               placeholder="Confirm password"
               secureTextEntry={isConfirmPasswordVisible}
               placeholderTextColor={'gray'}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
             />
 
             <TouchableOpacity
@@ -147,7 +197,13 @@ export default function Register({navigation}) {
           <TouchableOpacity
             style={[styles.signupButton, {width: windowsWidth - 55}]}
             onPress={() => {
-              navigation.navigate('Login');
+              //console.log(firstName, lastName, email, password,confirmPassword);
+              // eslint-disable-next-line prettier/prettier
+              if (RegisterUser(firstName, lastName, email, password,confirmPassword)){
+                navigation.navigate('Login');
+              } else {
+                //error
+              }
             }}>
             <Text style={styles.signupButtonText}> Sign Up! </Text>
           </TouchableOpacity>

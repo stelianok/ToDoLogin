@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
+import api from '../../services/api';
 import styles from './styles';
 import Header from '../../components/Header';
 
@@ -16,6 +17,9 @@ export default function Login({navigation}) {
   const windowsWidth = useWindowDimensions().width;
   const [showPass, setShowPass] = useState(true);
   const [press, setPress] = useState(false);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // eslint-disable-next-line no-shadow
   function ShowPassword(press) {
@@ -48,6 +52,8 @@ export default function Login({navigation}) {
             placeholder={'Email'}
             placecholderTextColor={'gray'}
             keyboardType={'email-address'}
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View>
@@ -63,6 +69,8 @@ export default function Login({navigation}) {
             placeholder={'Password'}
             secureTextEntry={showPass}
             placecholderTextColor={'gray'}
+            value={password}
+            onChangeText={setPassword}
           />
           <TouchableOpacity
             style={styles.buttonEye}
