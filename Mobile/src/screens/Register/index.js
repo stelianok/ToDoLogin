@@ -60,7 +60,7 @@ export default function Register({navigation}) {
           return true;
         })
         .catch(function (error) {
-          console.log(error);
+          console.log(error.response.data.error);
           return false;
         });
     } else if (!VerifyPassword(password, confirmPassword)) {
