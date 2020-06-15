@@ -8,6 +8,7 @@ import Login from './screens/Login';
 import Register from './screens/Register';
 
 import ForgotPassword from './screens/ForgotPassword';
+import ResetPassword from './screens/ResetPassword';
 import Home from './screens/Home';
 
 const Stack = createStackNavigator();
@@ -21,6 +22,7 @@ export default function Routes() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
