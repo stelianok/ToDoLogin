@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    marginTop: 120,
+    marginTop: 25,
   },
   titleText: {
     color: '#FFF',
@@ -63,6 +63,12 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 24,
     fontWeight: 'bold',
+  },
+  bottomText: {
+    color: '#3F3F3F',
+    fontSize: 18,
+
+    marginVertical: 15,
   },
 });
 export default styles;
