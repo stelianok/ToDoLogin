@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   useWindowDimensions,
+  Alert,
 } from 'react-native';
 
 import api from '../../services/api';
@@ -21,6 +22,19 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const ErrorAlert = (message) => {
+    Alert.alert(
+      'Error!',
+      `${message}`,
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('Alert working'),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
   function Login(email, password) {
     const data = {
       email,
@@ -35,6 +49,7 @@ export default function Login({navigation}) {
       })
       .catch(function (err) {
         console.log(err.response.data.error);
+        ErrorAlert(err.response.data.error);
         return false;
       });
   }
