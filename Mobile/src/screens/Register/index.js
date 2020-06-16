@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   useWindowDimensions,
+  Alert,
 } from 'react-native';
 
 import api from '../../services/api';
@@ -29,6 +30,20 @@ export default function Register({navigation}) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [token, setToken] = useState('');
+
+  const ErrorAlert = (message) => {
+    Alert.alert(
+      'Error',
+      `${message} `,
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('OK pressed'),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
   function SetPasswordVisibility() {
     if (isPasswordVisible) {
       setIsPasswordVisible(false);
@@ -43,7 +58,9 @@ export default function Register({navigation}) {
       setIsConfirmPasswordVisible(true);
     }
   }
-  function RegisterUser(firstName, lastName, email, password, confirmPassword) {
+
+  // eslint-disable-next-line prettier/prettier
+  async function RegisterUser(firstName, lastName, email, password, confirmPassword) {
     if (VerifyPassword(password, confirmPassword)) {
       const data = {
         first_name: firstName,
@@ -52,19 +69,21 @@ export default function Register({navigation}) {
         password: password,
       };
 
-      api
+      await api
         .post('/auth/register', data)
         .then(function (res) {
           console.log(res.data.token);
           setToken(res.data.token);
+          navigation.navigate('Login');
           return true;
         })
         .catch(function (error) {
-          console.log(error.response.data.error);
+          //console.log(error.response.data.error);
+          ErrorAlert(error.response.data.error);
           return false;
         });
     } else if (!VerifyPassword(password, confirmPassword)) {
-      console.log(`${password} is different than ${confirmPassword}`);
+      ErrorAlert("Passwords don't match");
     }
   }
   function VerifyPassword(password, confirmPassword) {
@@ -199,11 +218,7 @@ export default function Register({navigation}) {
             onPress={() => {
               //console.log(firstName, lastName, email, password,confirmPassword);
               // eslint-disable-next-line prettier/prettier
-              if (RegisterUser(firstName, lastName, email, password,confirmPassword)){
-                navigation.navigate('Login');
-              } else {
-                //error
-              }
+              RegisterUser(firstName, lastName, email, password,confirmPassword);
             }}>
             <Text style={styles.signupButtonText}> Sign Up! </Text>
           </TouchableOpacity>

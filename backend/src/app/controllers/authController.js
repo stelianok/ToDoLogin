@@ -40,7 +40,7 @@ router.post('/register', async(req,res) => {
       });
     }
   catch(err){
-    return res.status(400).send({error: 'Registration failed'});
+    return res.status(400).sendStatus({error: 'Registration failed'});
   }
 });
 
