@@ -7,21 +7,36 @@ import {
   useWindowDimensions,
   Alert,
 } from 'react-native';
-
+import api from '../../services/api';
 import Icon from 'react-native-vector-icons/Feather';
 
 import styles from './styles';
 export default function ForgotPassword({navigation}) {
   const windowsWidth = useWindowDimensions().width;
 
-  const InvalidTokenAlert = () => {
-    Alert.alert('Token', 'Token Invalid!!!', [
+  const [email, setEmail] = useState('');
+  const [token, setToken] = useState('');
+
+  const AlertPop = (title, message) => {
+    Alert.alert(`${title}`, `${message}`, [
       {
         text: 'OK',
-        onPress: () => console.log('invalid Token'),
+        onPress: () => console.log('Error is working'),
       },
     ]);
   };
+  async function ForgotPass(email) {
+    const data = {email: email};
+    await api
+      .post('auth/forgot_password', data)
+      .then(function (res) {
+        AlertPop('Success', res.data.Ok);
+        navigation.navigate('ResetPassword');
+      })
+      .catch(function (err) {
+        AlertPop('Error', err.response.data.error);
+      });
+  }
   return (
     <View style={styles.container}>
       <View style={styles.bodyContainer}>
@@ -29,7 +44,7 @@ export default function ForgotPassword({navigation}) {
         <View style={styles.card}>
           <Text style={styles.cardText}>
             Don't worry, we will send you a token in your email so you can
-            change you're password. :)
+            change it. :)
           </Text>
 
           <View>
@@ -45,38 +60,16 @@ export default function ForgotPassword({navigation}) {
               placeholder={'Email'}
               placeholderTextColor={'gray'}
               keyboardType={'email-address'}
-            />
-          </View>
-          <TouchableOpacity
-            style={[styles.submitButton, {width: windowsWidth - 60}]}
-            onPress={() => {}}>
-            <Text style={styles.submitButtonText}> Submit </Text>
-          </TouchableOpacity>
-
-          <Text style={styles.bottomText}>
-            Type here the token that was sent to you
-          </Text>
-          <View>
-            <Icon
-              name={'lock'}
-              size={28}
-              color={'#7e57c2'}
-              style={styles.inputIcon}
-              underlineColorAndroid="transparent"
-            />
-            <TextInput
-              style={[styles.textInput, {width: windowsWidth - 60}]}
-              placeholder={'Token'}
-              placeholderTextColor={'gray'}
+              value={email}
+              onChangeText={setEmail}
             />
           </View>
           <TouchableOpacity
             style={[styles.submitButton, {width: windowsWidth - 60}]}
             onPress={() => {
-              InvalidTokenAlert();
-              navigation.navigate('ResetPassword');
+              ForgotPass(email);
             }}>
-            <Text style={styles.submitButtonText}>Submit Token</Text>
+            <Text style={styles.submitButtonText}> Submit </Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -75,7 +75,7 @@ router.post('/forgot_password', async(req,res) => {
         res.send(err.message);
       }
       if(row === undefined){
-        res.status(400).sendStatus({error: 'User not found'});
+        res.status(400).send({error: 'User not found'});
       }
       const token = crypto.randomBytes(20).toString('hex');
 
@@ -92,16 +92,16 @@ router.post('/forgot_password', async(req,res) => {
       }, (err) => {
         if(err){
           console.log(err);
-          return res.status(400).sendStatus({error: 'Cannot send forgot password email'});
+          return res.status(400).send({error: 'Cannot send forgot password email'});
         }
 
-        return res.send();
+        return res.status(200).send({Ok: 'An email has been sent to you!'});
       })
     });
   }
   catch (err){
     console.log(err)
-    res.status(400).sendStatus({error: 'Error on forgot password, try again'})
+    res.status(400).send({error: 'Error on forgot password, try again'})
   }
 });
 
