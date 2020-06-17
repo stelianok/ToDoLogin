@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
-
+import api from '../../services/api';
 import styles from './styles';
 export default function ResetPassword({navigation}) {
   const windowsWidth = useWindowDimensions().width;
@@ -23,7 +23,7 @@ export default function ResetPassword({navigation}) {
   const [token, setToken] = useState('');
 
   const AlertPop = (title, message) => {
-    Alert.alert(title, message, [
+    Alert.alert(`${title}`, `${message}`, [
       {
         text: 'OK',
         onPress: () => {
@@ -46,7 +46,36 @@ export default function ResetPassword({navigation}) {
       setIsConfirmPasswordVisible(true);
     }
   }
+  function VerifyPassword(password, confirmPassword) {
+    if (password === confirmPassword) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  async function ChangePass(token, email, paassword, confirmPassword) {
+    if (VerifyPassword(password, confirmPassword)) {
+      const data = {
+        token,
+        email,
+        password,
+      };
 
+      await api
+        .post('/auth/reset_password', data)
+        .then(function (res) {
+          console.log(res.data);
+          AlertPop('Success', 'Everything OK!');
+          navigation.navigate('Login');
+        })
+        .catch(function (error) {
+          console.log(error.response.data.error);
+          AlertPop('Error', error.response.data.error);
+        });
+    } else {
+      AlertPop('Error', "Passwords don't match!");
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={styles.bodyContainer}>
@@ -99,7 +128,7 @@ export default function ResetPassword({navigation}) {
 
             <TextInput
               style={[styles.textInput, {width: windowsWidth - 55}]}
-              placeholder="password"
+              placeholder="new password"
               secureTextEntry={isPasswordVisible}
               placeholderTextColor={'gray'}
               value={password}
@@ -129,7 +158,7 @@ export default function ResetPassword({navigation}) {
 
             <TextInput
               style={[styles.textInput, {width: windowsWidth - 55}]}
-              placeholder="Confirm password"
+              placeholder="Confirm new password"
               secureTextEntry={isConfirmPasswordVisible}
               placeholderTextColor={'gray'}
               value={confirmPassword}
@@ -150,7 +179,9 @@ export default function ResetPassword({navigation}) {
           </View>
           <TouchableOpacity
             style={[styles.submitButton, {width: windowsWidth - 60}]}
-            onPress={() => {}}>
+            onPress={() => {
+              ChangePass(token, email, password, confirmPassword);
+            }}>
             <Text style={styles.submitButtonText}> Submit </Text>
           </TouchableOpacity>
         </View>
